@@ -1,0 +1,1 @@
+java -Xmx256m -jar ../lib/ekspos-app.jar $1

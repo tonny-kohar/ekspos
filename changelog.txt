@@ -1,0 +1,111 @@
+Ekspos 0.9
+- Add Google Picasa Web Album Integration
+- Fix ShellListView getLastSelectedIndex and getLastSelectedFile
+
+Ekspos 0.8.8
+- Upgrade to flexdock 0.5.1
+- Improved Docking handling
+- Improved Thread handling
+- Update Icon from Crystal Project Icons
+- Fix circular event handling
+
+Ekspos 0.8.7
+- Better Thread Handling
+- Refactor Application class
+
+Ekspos 0.8.6
+- Added StatusBar on Viewer Windows
+- Improved UI (JGoodies Looks-2.0.1)
+- Using Generics, Java 1.5 or higher is needed
+
+Ekspos 0.8.5
+- Fix endless loop ViewerWindow.validateComponent on Linux Suse 
+- Fix Sketsa.bat to automatically close DOS box
+- Fix file stream not closed
+
+Ekspos 0.8.4
+- Fix DetailView (F2) rename bug
+- Added startup directory from command line
+
+Ekspos 0.8.3
+- Improved Docking
+- Improved Browser Window Frame State
+- Improved Viewer Window Frame State
+- Added Fit To Window
+
+Ekspos 0.8.2
+- Add Image Loading Progress Repaint Preferences
+- fixed Viewer Window Frame state
+- fixed some repaint problem
+
+Ekspos 0.8.1
+- update build.xml file
+- fixed the NoClassFoundException
+
+Ekspos 0.8
+- update build.xml file
+- change kiyut-swing-shell.jar to kiyut-swing.jar
+- a lot of refactoring
+- add Copy, Cut, Paste
+- add Drag and Drop
+- fix Application hang during startup (hopefully)
+- fix TOTD bug
+
+Ekspos 0.7
+- change the icon set, using Crystal SVG KDE
+- Browser Window improvement (add Toolbar)
+- ViewerWindow improvement (various bug fixes)
+- ViewerWindow change zoom increment from 0.25 to 0.1
+- Use resource bundle for Menu, Action, Toolbar for i18n
+
+Ekspos 0.6.1
+- add Codec Preferences
+- Improved performance
+- Improved session persistence
+- Improved ImageWindow
+- small refactoring
+
+Ekspos 0.6
+- add docking layout
+- add session persistence for docking layout
+- fix image load thread
+- fix ImageWindow frame pack
+
+Ekspos 0.5
+- fix bug on using JAIImageIO tool I/0
+
+Ekspos 0.4
+- Preferences Dialog
+- thumbnail cache
+- ant build.xml file
+
+Ekspos 0.3
+- FileListView and FolderTree is changed using component from KIYUT Software
+- better image loading thread handling
+- fix bug on image shaking while dragging on ImageWindow
+- change the icon into java lnf icon
+
+Ekspos 0.2.4
+- JFolderTree now implements scrollable
+- layout enhancement on about form
+- thumbnail button selection use "List.selectionBackground"
+- fix on MS Window folderTree always query floppy drive
+
+Ekspos 0.2.3
+- add experimental plugin support
+- bug fixes on ThumbnailView (size of thumbnail)
+- bug fixes on JImagePane repaint
+
+Ekspos 0.2.2
+- add list view on fileListView
+- bug fixes on outOfMemoryError exception, it throws less exception
+- synchronize selection on folderTree & fileListView
+- improved thumbnailView on progressive loading & focus gained color
+
+Ekspos 0.2.1
+- fix bug on imageWindow, now accept pg_up, pg_down, space, back_space, plus, minus to cycle through images
+- fix bug file list view. now accept double click to open imageWindow
+
+Ekspos 0.2
+- rewrite folder tree & file list view
+- improved folder tree, on MS Windows, it can show special folder like Desktop, My Computer

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<jnlp spec='1.0+' codebase="$JNLP-CODEBASE" href="java-mail.jnlp">
+    <information>
+        <title>JavaMail</title>
+        <vendor>Sun Microsystems, Inc.</vendor>
+    </information>
+    <security><all-permissions/></security>
+    <resources>
+        <jar href="activation.jar"/>
+        <jar href="mail.jar"/>
+    </resources>
+    <component-desc/>
+</jnlp>

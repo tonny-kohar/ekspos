@@ -1,0 +1,23 @@
+Ekspos uses several 3rd party libraries/components:
+
+- Flexdock Docking Framework 
+  (http://flexdock.dev.java.net)
+- JGoodies Look And Feel 
+  (http://www.jgoodies.com)
+- Commons-Logging from Apache Software Foundation 
+  (http://www.apache.org)
+- Crystal Project Icons by Everaldo Coelho 
+  (http://www.everaldo.com)
+- Google Picasa Web Album integration by Mariano Guerra 
+  (http://code.google.com/p/pycasa/)
+- Google gdata-java-client 
+  (http://code.google.com/p/gdata-java-client/)
+- Java Mail API 
+  (http://java.sun.com/products/javamail/)
+- JavaBeans Activation Framework 
+  (http://java.sun.com/products/javabeans/jaf/index.jsp)
+- Swing Layout 
+  (https://swing-layout.dev.java.net/)
+
+For legal and licensing issues, 
+please read the all LICENSE files in the legal folder.

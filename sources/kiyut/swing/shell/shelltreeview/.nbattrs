@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE attributes PUBLIC "-//NetBeans//DTD DefaultAttributes 1.0//EN" "http://www.netbeans.org/dtds/attributes-1_0.dtd">
+<attributes version="1.0">
+    <fileobject name="ShellTreeView.java">
+        <attr name="class_dependency_javax.swing.JTree" stringvalue="ShellTreeView"/>
+    </fileobject>
+    <fileobject name="ShellTreeViewModel.java">
+        <attr name="class_dependency_javax.swing.tree.DefaultTreeModel" stringvalue="ShellTreeViewModel"/>
+    </fileobject>
+</attributes>

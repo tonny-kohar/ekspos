@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- JNLP File for Ekspos Image Viewer -->
+<jnlp spec="1.0+" codebase="$JNLP-CODEBASE" href="ekspos.jnlp">
+    <information>
+        <title>$APP-NAME $APP-VERSION</title>
+        <vendor>KIYUT (http://www.kiyut.com)</vendor>
+        <homepage href="../index.html"/>
+        <description>Ekspos Image Viewer.</description>
+        <description kind="short">Ekspos is cross platform Image Viewer.</description>
+        <icon href="ekspos_64x64.gif"/>
+        <offline-allowed/>
+    </information>
+    <security>
+        <all-permissions/>
+    </security>
+    <resources>
+        <j2se version="1.5+" max-heap-size="256m" />
+        <jar href="ekspos-$APP-VERSION.jar"/>
+        <jar href="flexdock-0.5.1.jar"/>
+        <jar href="commons-logging-1.1.jar"/>
+        <jar href="looks-2.1.4.jar"/>
+        <jar href="swing-layout-1.0.3.jar"/>
+        <jar href="pycasa-0.0.4.jar"/>
+        <jar href="gdata-base-1.0.jar"/>
+        <jar href="gdata-client-1.0.jar"/>
+        <jar href="gdata-client-meta-1.0.jar"/>
+        <jar href="gdata-core-1.0.jar"/>
+        <jar href="gdata-docs-1.0.jar"/>
+        <jar href="gdata-docs-meta-1.0.jar"/>
+        <jar href="gdata-media-1.0.jar"/>
+        <jar href="gdata-photos-1.0.jar"/>
+        <jar href="gdata-photos-meta-1.0.jar"/>
+        <extension name='java-mail' href='java-mail.jnlp' />
+    </resources>
+    <application-desc main-class="kiyut.ekspos.Ekspos"/>
+</jnlp>

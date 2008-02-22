@@ -1,0 +1,325 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project basedir="." default="help" name="Application - Ekspos">
+    
+    <!--
+    ===================
+    INITIALIZATION SECTION
+    ===================
+    -->
+    <target name="init-args" unless="args">
+        <property name="args" value=""/>
+    </target>
+    
+    <target name="init">
+        <tstamp/>
+        <property name="app.title" value="Ekspos Image Viewer"/>
+        <property name="app.version" value="0.9"/>
+        <property name="app.version.dash" value="0_9"/>
+        
+        <property name="jvmarg" value="-Xmx128m"/>
+        <property name="jvmarg-profiler" value=""/>
+        <property name="compiler.source" value="1.5"/>
+        <property name="compiler.target" value="1.5"/>
+        
+        <property file="build.properties"/>
+        <property name="debug" value="on"/>
+        <property name="optimize" value="on"/>
+        <property name="deprecation" value="on"/>
+        
+        <property name="jdk.docs.api.href" value="http://java.sun.com/j2se/1.5.0/docs/api/"/>
+        <property name="jdk.docs.api.dir" value="/opt/jdk-docs/api"/>
+        
+        <property name="source.dir" value="sources"/>
+        <property name="resources.dir" value="resources"/>
+        <property name="manifest.dir" value="manifests"/>
+        <property name="classes.dir" value="classes"/>
+        <property name="lib.dir" value="lib"/>
+        <property name="docs.api.dir" value="docs/api"/>
+        <property name="dist.dir" value="dist"/>
+        <property name="dist-jnlp.dir" value="${dist.dir}/jnlp"/>
+        
+        <property name="jnlp.codebase" value="http://www.kiyut.com/products/ekspos/webstart/" />
+        <!-- <property name="jnlp.codebase" value="http://localhost:8080/~tonny/kiyut/products/ekspos/webstart/" /> -->
+        
+        <path id="lib.dir.classpath">
+            <fileset dir="${lib.dir}">
+                <include name="*.jar"/>
+                <exclude name="ekspos-*.jar"/>
+            </fileset>
+        </path>
+    </target>
+    
+    <!--
+    ===================
+    HELP SECTION
+    ===================
+    -->
+    <target depends="init" description="Displays the usage" name="help">
+        <echo message=""/>
+        <echo message="${ant.project.name} build file"/>
+        <echo message=""/>
+        <echo message="Available targets are:"/>
+        <echo message=""/>
+        <echo message="   run               --&gt; run ekspos on the classes.dir"/>
+        <echo message="   run-jmx           --&gt; run ekspos on the classes.dir with JMX (&gt;JDK 1.5 "/>
+        <echo message="   run-opengl        --&gt; run ekspos on the classes.dir with OpenGL (&gt;JDK 1.5)"/>
+        <echo message="   run-metal-steel   --&gt; run ekspos on the classes.dir with metal steel theme (&lt;JDK1.5)"/>
+        <echo message="   profile           --&gt; same with run but with profiling support, requires (Netbeans with profiler support)"/>
+        <echo message="   compile           --&gt; compiles the source code"/>
+        <echo message="   jar               --&gt; make the jars file and put on lib directory "/>
+        <echo message="   release           --&gt; make the release distribution "/>
+        <echo message="   release-jnlp      --&gt; make the release jnlp"/>
+        <echo message="   javadoc           --&gt; generates the API documentation"/>
+        <echo message="   clean             --&gt; cleans up the compile directory"/>
+        <echo message="   clean-javadoc     --&gt; cleans up the API documentation directory"/>
+        <echo message="   clean-all         --&gt; cleans up all build stuff"/>
+        <echo message=""/>
+        <echo message="See the comments in the build.xml file for more details."/>
+        <echo message=""/>
+        <echo message=""/>
+    </target>
+    
+    <!--
+    ===================
+    COMPILATION SECTION
+    ===================
+    -->
+    <target name="compile" depends="init">
+        <mkdir dir="${classes.dir}"/>
+        <echo message="debug ${debug}, optimize ${optimize}, deprecation ${deprecation}"/>
+        <javac srcdir="${source.dir}" destdir="${classes.dir}" deprecation="${deprecation}" 
+               debug="${debug}" optimize="${optimize}" target="${compiler.target}" source="${compiler.source}">
+            <classpath refid="lib.dir.classpath"/>
+            <compilerarg value="-Xlint:unchecked" />
+        </javac>
+    </target>
+    
+    <!--
+    ===================
+    JAR SECTION
+    ===================
+    -->
+    <target name="jar" depends="clean,clean-jar,compile">
+        <property name="ekspos-app.manifest" value="${manifest.dir}/ekspos-app-manifest.mf"/>
+        <property name="ekspos-app-gen.manifest" value="${manifest.dir}/ekspos-app-manifest-gen.mf"/>
+        <property name="ekspos.manifest" value="${manifest.dir}/ekspos-manifest.mf"/>
+        
+        <jar jarfile="${lib.dir}/ekspos-${app.version}.jar" manifest="${ekspos.manifest}">
+            <fileset dir="${classes.dir}" />
+            <fileset dir="${resources.dir}" />
+        </jar>
+        
+        <copy file="${ekspos-app.manifest}" tofile="${ekspos-app-gen.manifest}"/>
+        <replace file="${ekspos-app-gen.manifest}">
+            <replacefilter token="$APP-VERSION" value="${app.version}" />
+        </replace>
+        <jar jarfile="${lib.dir}/ekspos-app.jar" manifest="${ekspos-app-gen.manifest}">
+            <fileset dir=".">
+                <include name="changelog.txt"/>
+                <include name="readme.html"/>
+            </fileset>
+        </jar>
+    </target>
+
+    <!--
+    ===================
+    RELEASE SECTION
+    ===================
+    -->
+    
+    <target name="release" depends="clean-release,jar">
+        <mkdir dir="${dist.dir}"/>
+        <zip destfile="${dist.dir}/ekspos-${app.version.dash}.zip" basedir="." excludes="${dist.dir}/**, kiyut.keystore" />
+    </target>
+    
+    <target name="release-jnlp" depends="clean-release-jnlp,jar">
+        <property name="keystore" value="kiyut.keystore"/>
+        <property name="storepass" value="secret"/>
+        
+
+        <mkdir dir="${dist-jnlp.dir}"/>
+        <copy todir="${dist-jnlp.dir}">
+            <fileset dir="${lib.dir}"/>
+        </copy>
+        
+        <echo message=" "/>
+        <echo message="---------------------------------------------------------------------- "/>
+        <echo message="usage: " />
+        <echo message="    ant release-jnlp -Dkeystore=/somedir/keystore -Dstorepass=secret" />
+        <echo message="---------------------------------------------------------------------- "/>
+        <echo message=" "/>
+        <echo message="start signing" />
+        <signjar alias="kiyut" storepass="${storepass}" keystore="${keystore}" lazy="true">
+            <fileset dir="${dist-jnlp.dir}">
+                <include name="*.jar"/>
+                <exclude name="activation.jar"/>
+                <exclude name="mail.jar"/>
+            </fileset>
+        </signjar>
+        
+        <copy file="bin/icons/ekspos_64x64.gif" todir="${dist-jnlp.dir}"/>
+        <copy file="ekspos.jnlp" todir="${dist-jnlp.dir}"/>
+        <copy file="java-mail.jnlp" todir="${dist-jnlp.dir}"/>
+        
+        <replace file="${dist-jnlp.dir}/ekspos.jnlp">
+            <replacefilter token="$JNLP-CODEBASE" value="${jnlp.codebase}" />
+            <replacefilter token="$APP-NAME" value="${app.title}" />
+            <replacefilter token="$APP-VERSION" value="${app.version}" />
+        </replace>
+        
+        <replace file="${dist-jnlp.dir}/java-mail.jnlp">
+            <replacefilter token="$JNLP-CODEBASE" value="${jnlp.codebase}" />
+        </replace>
+        
+    </target>
+    
+    <!--
+    ===================
+    RUN SECTION
+    ===================
+    -->
+    <target name="run" depends="init,compile" description="run ekspos on the classes.dir">
+        <echo message="${ant.project.name} ${app.version}"/>
+        <echo message="jvmarg: ${jvmarg}"/>
+        <echo message="jvmarg: ${jvmarg-profiler}"/>
+        <echo message="arg: ${args}"/>
+        <echo message=""/>    
+        <java classname="kiyut.ekspos.Ekspos" failonerror="true" fork="true">
+            <classpath>
+                <pathelement location="${classes.dir}" />
+                <pathelement location="${resources.dir}" />
+                <path refid="lib.dir.classpath"/>
+            </classpath>
+            <arg line="${args}"/>
+            <jvmarg value="${jvmarg}" />
+            <!-- <jvmarg value="${jvmarg-profiler}" /> -->
+        </java>
+    </target>
+    
+    <target name="run-jmx" depends="init,compile">
+        <antcall target="run">
+            <param name="jvmarg" value="-Dcom.sun.management.jmxremote=true ${jvmarg}"/>
+        </antcall>
+    </target>
+    
+    <target name="run-opengl" depends="init,compile">
+        <antcall target="run">
+            <param name="jvmarg" value="-Dsun.java2d.opengl=true"/>
+        </antcall>
+    </target>
+    
+    <target name="run-metal-steel" depends="init,compile">
+        <antcall target="run">
+            <param name="jvmarg" value="-Dswing.metalTheme=steel"/>
+        </antcall>
+    </target>
+    
+    <target name="run-single" depends="init,compile" description="run the specified class on the classes.dir">
+        <echo message="================================================================" />
+        <echo message="  usage: ant run-single -Dclass=kiyut.bug.Bug11 -Dargs=anything" />
+        <echo message="================================================================" />
+        <echo message=" " />
+        <java classname="${class}" failonerror="true" fork="true">
+            <classpath>
+                <pathelement location="${classes.dir}" />
+                <pathelement location="${resources.dir}" />
+                <path refid="lib.dir.classpath"/>
+            </classpath>
+            <arg value="${args}"/>
+        </java>
+    </target>
+    
+    <target name="profile" depends="init,compile" description="Profile Project">
+        <fail unless="netbeans.home">This target can only run inside the NetBeans IDE.</fail>
+        
+        <nbprofiledirect>
+            <classpath>
+                <!--
+                <pathelement location="${classes.dir}" />
+                <pathelement location="${resources.dir}" />
+                <path refid="lib.dir.classpath"/>
+                -->
+            </classpath>
+        </nbprofiledirect>
+        
+        <antcall target="run">
+            <param name="jvmarg-profiler" value="${profiler.info.jvmargs.agent}"/>
+        </antcall>
+        
+        <!--<java classname="kiyut.ekspos.Ekspos" failonerror="true" fork="true">
+            <classpath>
+                <pathelement location="${classes.dir}" />
+                <pathelement location="${resources.dir}" />
+                <path refid="lib.dir.classpath"/>
+            </classpath>
+            <arg line="${args}"/>
+            <jvmarg value="${profiler.info.jvmargs.agent}" />
+            <jvmarg value="${jvmarg}" />
+        </java>
+        -->
+    </target>
+    
+    <!--
+    ===================
+    JAVADOC SECTION
+    ===================
+    -->
+    <target name="javadoc" depends="init" description="generates the API documentation.">
+        <javadoc 
+            destdir="${docs.api.dir}"
+            author="false"
+            version="false"
+            use="true"
+            windowtitle="${ant.project.name} API">
+            
+            <packageset dir="${source.dir}" defaultexcludes="yes" />
+            
+            <classpath>
+                <pathelement location="${classes.dir}" />
+                <pathelement location="${resources.dir}" />
+                <path refid="lib.dir.classpath"/>
+            </classpath>
+            
+            <doctitle><![CDATA[<h1>${ant.project.name} API Specification</h1>]]></doctitle>
+            <bottom><![CDATA[<i>Copyright &copy; 2002-2008 KIYUT. All Rights Reserved.</i>]]></bottom>
+            <group title="KIYUT Ekspos packages" packages="kiyut.ekspos*"/>
+            <group title="KIYUT ImageIO packages" packages="kiyut.imageio*"/>
+            <group title="KIYUT Swing packages" packages="kiyut.swing.*"/>
+            <link offline="true" href="${jdk.docs.api.href}" packagelistLoc="${jdk.docs.api.dir}"/>
+        </javadoc>
+    </target>
+    
+    
+    <!--
+    ===================
+    CLEAN SECTION
+    ===================
+    -->
+    <target name="clean" depends="init" description="Clean build products.">
+        <delete dir="${classes.dir}"/>
+    </target>
+    
+    <target name="clean-jar" depends="init" description="Clean build products.">
+        <delete>
+            <fileset dir="${lib.dir}" includes="**/ekspos-*.jar"/>
+        </delete>
+        <!-- <delete file="${lib.dir}/kiyut-swing.jar"/> -->
+    </target>
+    
+    <target name="clean-javadoc" depends="init" description="cleans up the API documentation directory">
+        <delete dir="${docs.api.dir}"/>
+    </target>
+    
+    <target name="clean-release" depends="init" description="Clean release">
+        <delete dir="${dist.dir}"/>
+    </target>
+    
+    <target name="clean-release-jnlp" depends="init" description="Clean release jnlp">
+        <delete dir="${dist-jnlp.dir}"/>
+    </target>
+    
+    <target name="clean-all" depends="clean,clean-jar,clean-javadoc,clean-release,clean-release-jnlp" description="Clean build products.">
+    </target>
+    
+</project>
+

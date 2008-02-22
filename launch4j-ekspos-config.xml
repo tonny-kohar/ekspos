@@ -1,0 +1,20 @@
+<launch4jConfig>
+  <dontWrapJar>true</dontWrapJar>
+  <headerType>0</headerType>
+  <jar>../lib/ekspos-app.jar</jar>
+  <outfile>/home/tonny/projects/java/ekspos/build/bin/ekspos.exe</outfile>
+  <errTitle></errTitle>
+  <jarArgs></jarArgs>
+  <chdir></chdir>
+  <customProcName>false</customProcName>
+  <stayAlive>false</stayAlive>
+  <icon>/home/tonny/projects/java/ekspos/build/bin/icons/ekspos_32x32.ico</icon>
+  <jre>
+    <path></path>
+    <minVersion>1.5.0</minVersion>
+    <maxVersion></maxVersion>
+    <initialHeapSize>0</initialHeapSize>
+    <maxHeapSize>256</maxHeapSize>
+    <args></args>
+  </jre>
+</launch4jConfig>
