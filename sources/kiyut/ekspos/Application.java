@@ -14,8 +14,8 @@ public final class Application {
 
     private String name = "Ekspos";
     private String longName = "Ekspos Image Viewer";
-    private String version = "0.9";
-    private String buildNumber = "200802061317";
+    private String version = "1.0";
+    private String buildNumber = "201001251528";
     private Image iconImage;
 
     private static Application instance;

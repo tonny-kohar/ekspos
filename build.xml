@@ -13,8 +13,8 @@
     <target name="init">
         <tstamp/>
         <property name="app.title" value="Ekspos Image Viewer"/>
-        <property name="app.version" value="0.9"/>
-        <property name="app.version.dash" value="0_9"/>
+        <property name="app.version" value="1.0"/>
+        <property name="app.version.dash" value="1_0"/>
         
         <property name="jvmarg" value="-Xmx128m"/>
         <property name="jvmarg-profiler" value=""/>
@@ -39,7 +39,7 @@
         <property name="dist-jnlp.dir" value="${dist.dir}/jnlp"/>
         
         <property name="jnlp.codebase" value="http://www.kiyut.com/products/ekspos/webstart/" />
-        <!-- <property name="jnlp.codebase" value="http://localhost:8080/~tonny/kiyut/products/ekspos/webstart/" /> -->
+        <!-- <property name="jnlp.codebase" value="file:///home/tonny/projects/java/ekspos/source-code/ekspos/dist/jnlp/" /> -->
         
         <path id="lib.dir.classpath">
             <fileset dir="${lib.dir}">
@@ -141,6 +141,25 @@
         <copy todir="${dist-jnlp.dir}">
             <fileset dir="${lib.dir}"/>
         </copy>
+
+        <echo message=" "/>
+        <echo message="Workaround for Sun JNLP bug 6533653, for java 1.6" />
+        <property name="dummy.dir" value="${dist-jnlp.dir}/dummy/kiyut/ekspos/dummy"/>
+        <mkdir dir="${dummy.dir}"/>
+        <copy todir="${dummy.dir}" file="dummy"/>
+
+        <jar jarfile="${dist-jnlp.dir}/gdata-client-meta-1.0.jar" update="yes">
+            <fileset dir="${dist-jnlp.dir}/dummy/" />
+        </jar>
+
+        <jar jarfile="${dist-jnlp.dir}/gdata-docs-meta-1.0.jar" update="yes">
+            <fileset dir="${dist-jnlp.dir}/dummy/" />
+        </jar>
+
+        <jar jarfile="${dist-jnlp.dir}/gdata-photos-meta-1.0.jar" update="yes">
+            <fileset dir="${dist-jnlp.dir}/dummy/" />
+        </jar>
+        <!-- end work around -->
         
         <echo message=" "/>
         <echo message="---------------------------------------------------------------------- "/>

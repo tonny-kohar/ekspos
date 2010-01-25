@@ -1,3 +1,6 @@
+Ekspos 1.0
+- Workaround Webstart bug 6533653
+
 Ekspos 0.9
 - Add Google Picasa Web Album Integration
 - Fix ShellListView getLastSelectedIndex and getLastSelectedFile
