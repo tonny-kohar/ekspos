@@ -81,13 +81,13 @@
             </view>
             <subprojects/>
         </general-data>
-        <java-data xmlns="http://www.netbeans.org/ns/freeform-project-java/1">
+        <java-data xmlns="http://www.netbeans.org/ns/freeform-project-java/3">
             <compilation-unit>
                 <package-root>sources</package-root>
                 <package-root>resources</package-root>
                 <classpath mode="compile">classes:resources:lib/looks-2.1.4.jar:lib/flexdock-0.5.1.jar:lib/commons-logging-1.1.jar:lib/pycasa-0.0.4.jar:lib/gdata-base-1.0.jar:lib/gdata-client-1.0.jar:lib/gdata-client-meta-1.0.jar:lib/gdata-core-1.0.jar:lib/gdata-docs-1.0.jar:lib/gdata-docs-meta-1.0.jar:lib/gdata-media-1.0.jar:lib/gdata-photos-1.0.jar:lib/gdata-photos-meta-1.0.jar:lib/activation.jar:lib/mail.jar</classpath>
                 <built-to>classes</built-to>
-                <source-level>1.5</source-level>
+                <source-level>1.6</source-level>
             </compilation-unit>
         </java-data>
     </configuration>
