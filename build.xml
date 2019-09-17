@@ -39,8 +39,7 @@
         <property name="dist-jnlp.dir" value="${dist.dir}/jnlp"/>
         
         <property name="jnlp.codebase" value="http://www.kiyut.com/products/ekspos/webstart/" />
-        <!-- <property name="jnlp.codebase" value="file:///home/tonny/projects/java/ekspos/source-code/ekspos/dist/jnlp/" /> -->
-        
+               
         <path id="lib.dir.classpath">
             <fileset dir="${lib.dir}">
                 <include name="*.jar"/>
@@ -133,8 +132,8 @@
     </target>
     
     <target name="release-jnlp" depends="clean-release-jnlp,jar">
-        <property name="keystore" value="kiyut.keystore"/>
-        <property name="storepass" value="secret"/>
+        <property name="keystore" value="YOUR KEYSTORE"/>
+        <property name="storepass" value="YOUR KEYSTORE SECRET"/>
         
 
         <mkdir dir="${dist-jnlp.dir}"/>
